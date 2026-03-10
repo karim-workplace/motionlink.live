@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Morgan | Creative Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF3366',
+                        secondary: '#6C5CE7',
+                        accent: '#00D9FF',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Space Grotesk', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #FF3366 0%, #6C5CE7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #FF3366; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#" class="text-2xl font-display font-bold gradient-text">AM.</a>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-sm font-medium hover:text-primary transition-colors">About</a>
+                    <a href="#work" class="text-sm font-medium hover:text-primary transition-colors">Work</a>
+                    <a href="#skills" class="text-sm font-medium hover:text-primary transition-colors">Skills</a>
+                    <a href="#contact" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+                    <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-800">
+                        <span class="dark:hidden">🌙</span>
+                        <span class="hidden dark:inline">☀️</span>
+                    </button>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#about" class="block py-2 hover:text-primary">About</a>
+                <a href="#work" class="block py-2 hover:text-primary">Work</a>
+                <a href="#skills" class="block py-2 hover:text-primary">Skills</a>
+                <a href="#contact" class="block py-2 hover:text-primary">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-16 bg-white dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-8">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-sm font-medium">Available for work</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter mb-6">
+                <span class="block">Creative</span>
+                <span class="block gradient-text">Developer</span>
+            </h1>
+            
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10">
+                Crafting digital experiences that blend <span class="text-primary font-semibold">artistic vision</span> with <span class="text-secondary font-semibold">technical excellence</span>.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#work" class="px-8 py-4 bg-primary text-white rounded-full font-semibold hover:bg-secondary transition-colors">
+                    View My Work
+                </a>
+                <a href="#contact" class="px-8 py-4 border-2 border-gray-300 dark:border-gray-700 rounded-full font-semibold hover:border-primary hover:text-primary transition-colors">
+                    Let's Talk
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop" alt="Profile" class="rounded-2xl shadow-2xl w-full">
+                    <div class="absolute -bottom-6 -right-6 bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-xl">
+                        <div class="text-4xl font-bold gradient-text">5+</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Years Experience</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-4">About Me</h2>
+                    <h3 class="text-4xl font-display font-bold mb-6">Bridging design & technology</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-lg mb-6 leading-relaxed">
+                        I'm Alex Morgan, a multidisciplinary developer based in San Francisco. I create beautiful, functional websites that leave lasting impressions.
+                    </p>
+                    
+                    <div class="grid grid-cols-3 gap-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <div>
+                            <div class="text-3xl font-bold text-primary">50+</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Projects</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-secondary">30+</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Clients</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-accent">12</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Awards</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-white dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-4">Expertise</h2>
+                <h3 class="text-4xl font-display font-bold">Skills & Technologies</h3>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <h4 class="text-xl font-bold flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary text-lg">💻</span>
+                        Development
+                    </h4>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">JavaScript / TypeScript</span>
+                                <span class="text-primary">95%</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                <div class="h-full bg-primary rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">React / Next.js</span>
+                                <span class="text-secondary">90%</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                <div class="h-full bg-secondary rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">Node.js / Backend</span>
+                                <span class="text-accent">85%</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                <div class="h-full bg-accent rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold flex items-center gap-3 mb-6">
+                        <span class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary text-lg">🎨</span>
+                        Design
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                            <div class="text-2xl mb-2">🎯</div>
+                            <h5 class="font-bold">UI Design</h5>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Figma, Sketch</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                            <div class="text-2xl mb-2">✨</div>
+                            <h5 class="font-bold">Motion</h5>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">After Effects</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                            <div class="text-2xl mb-2">🎯</div>
+                            <h5 class="font-bold">Branding</h5>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Identity, Strategy</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                            <div class="text-2xl mb-2">📐</div>
+                            <h5 class="font-bold">3D Design</h5>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Blender, Spline</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-4">Selected Work</h2>
+                    <h3 class="text-4xl font-display font-bold">Featured Projects</h3>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="aspect-video overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop" alt="Project 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-primary text-sm font-bold">Web Application</span>
+                        <h4 class="text-xl font-bold mt-2 mb-2">Nova Fintech Dashboard</h4>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Financial analytics platform with real-time data visualization.</p>
+                    </div>
+                </div>
+
+                <div class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="aspect-video overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&h=600&fit=crop" alt="Project 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-secondary text-sm font-bold">E-commerce</span>
+                        <h4 class="text-xl font-bold mt-2 mb-2">Luxe Fashion Store</h4>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">High-end fashion e-commerce with AR try-on features.</p>
+                    </div>
+                </div>
+
+                <div class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="aspect-video overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop" alt="Project 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-accent text-sm font-bold">AI Platform</span>
+                        <h4 class="text-xl font-bold mt-2 mb-2">Cogni AI Platform</h4>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Enterprise AI for automated content generation.</p>
+                    </div>
+                </div>
+
+                <div class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div class="aspect-video overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555421689-491a97ff2040?w=800&h=600&fit=crop" alt="Project 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-primary text-sm font-bold">Mobile App</span>
+                        <h4 class="text-xl font-bold mt-2 mb-2">HealthTrack Pro</h4>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Health monitoring and fitness tracking application.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-4">Get In Touch</h2>
+                    <h3 class="text-4xl font-display font-bold mb-6">Let's create something amazing</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-8">Have a project in mind? I'd love to hear from you. Fill out the form and I'll get back to you within 24 hours.</p>
+
+                    <div class="space-y-4">
+                        <a href="mailto:hello@alexmorgan.dev" class="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-primary/10 transition-colors">
+                            <span class="text-2xl">📧</span>
+                            <div>
+                                <div class="text-sm text-gray-500">Email</div>
+                                <div class="font-semibold">hello@alexmorgan.dev</div>
+                            </div>
+                        </a>
+                        <a href="#" class="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-secondary/10 transition-colors">
+                            <span class="text-2xl">💼</span>
+                            <div>
+                                <div class="text-sm text-gray-500">LinkedIn</div>
+                                <div class="font-semibold">linkedin.com/in/alexmorgan</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- WORKING CONTACT FORM - Connected to Formspree -->
+                <form action="https://formspree.io/f/xqedrpzq" method="POST" class="space-y-4 bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl" id="contact-form">
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Name *</label>
+                            <input type="text" name="name" placeholder="John Doe" required 
+                                class="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary outline-none transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Email *</label>
+                            <input type="email" name="email" placeholder="john@example.com" required 
+                                class="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary outline-none transition-colors">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Subject *</label>
+                        <input type="text" name="subject" placeholder="Project Inquiry" required 
+                            class="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary outline-none transition-colors">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Message *</label>
+                        <textarea name="message" rows="4" placeholder="Tell me about your project..." required 
+                            class="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:border-primary outline-none resize-none transition-colors"></textarea>
+                    </div>
+
+                    <!-- Spam protection -->
+                    <input type="text" name="_gotcha" style="display:none">
+                    
+                    <button type="submit" id="submit-btn" 
+                        class="w-full py-4 bg-primary text-white rounded-lg font-semibold hover:bg-secondary transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+                        <span>Send Message</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+
+                    <div id="form-status" class="hidden text-center p-4 rounded-lg mt-4"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-900 text-white border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-2xl font-display font-bold gradient-text">AM.</div>
+            <p class="text-gray-400 text-sm">© 2025 Alex Morgan. All rights reserved.</p>
+            <div class="flex gap-6 text-sm">
+                <a href="#" class="hover:text-primary transition-colors">Twitter</a>
+                <a href="#" class="hover:text-primary transition-colors">LinkedIn</a>
+                <a href="#" class="hover:text-primary transition-colors">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Form Handling with visual feedback
+        const form = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const formStatus = document.getElementById('form-status');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const originalBtnContent = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="animate-pulse">Sending...</span>';
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    formStatus.className = 'block text-center p-4 rounded-lg bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200';
+                    formStatus.textContent = '✅ Message sent successfully! I\'ll get back to you soon.';
+                    form.reset();
+                } else {
+                    throw new Error('Failed to send');
+                }
+            } catch (error) {
+                formStatus.className = 'block text-center p-4 rounded-lg bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200';
+                formStatus.textContent = '❌ Error sending message. Please email hello@alexmorgan.dev directly.';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnContent;
+                formStatus.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    formStatus.classList.add('hidden');
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>

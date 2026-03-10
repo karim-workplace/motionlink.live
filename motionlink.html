@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotionLink | Cinematic Visual Storytelling Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0F172A;
+            --accent-purple: #7C3AED;
+            --electric-purple: #A855F7;
+            --soft-white: #F8FAFC;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--soft-white);
+            color: var(--primary-blue);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-purple);
+            border-radius: 4px;
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Animated Background */
+        .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #7C3AED 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating Animation */
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Pulse Glow */
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(124, 58, 237, 0.6); }
+        }
+        
+        /* Link Underline Animation */
+        .link-hover {
+            position: relative;
+        }
+        
+        .link-hover::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--accent-purple);
+            transition: width 0.3s ease;
+        }
+        
+        .link-hover:hover::after {
+            width: 100%;
+        }
+        
+        /* Card Hover Effects - FIXED: Removed conflicting transitions */
+        .service-card {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
+        }
+        
+        /* Process Line */
+        .process-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-purple), transparent);
+            transform: translateX(-50%);
+        }
+        
+        /* Video Container */
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+        
+        .video-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.1));
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--electric-purple) 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+        }
+        
+        /* Portfolio Grid */
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+        
+        .portfolio-item img {
+            transition: transform 0.6s ease;
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        /* Navigation */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Text Reveal Animation */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        /* Stats Counter */
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+        
+        /* Custom Cursor Effect */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-purple);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease;
+            opacity: 0.5;
+        }
+        
+        @media (max-width: 768px) {
+            .cursor-dot, .cursor-outline {
+                display: none;
+            }
+        }
+        
+        /* Blob Animation */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+        
+        /* FIXED: Ensure services are visible by default */
+        #services {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        .service-card {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+<a href="#home" class="flex items-center space-x-3 group">
+    <div class="relative w-10 h-10 flex items-center justify-center">
+        <img src="Untitled_design__16_-removebg-preview.png" alt="MotionLink Logo" class="w-full h-full">
+    </div>
+    <span class="text-2xl font-bold font-['Space_Grotesk'] text-slate-900 group-hover:text-violet-600 transition-colors">MotionLink</span>
+</a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="link-hover text-slate-700 hover:text-violet-600 font-medium transition-colors">Home</a>
+                    <a href="#about" class="link-hover text-slate-700 hover:text-violet-600 font-medium transition-colors">About</a>
+                    <a href="#services" class="link-hover text-slate-700 hover:text-violet-600 font-medium transition-colors">Services</a>
+                    <a href="#portfolio" class="link-hover text-slate-700 hover:text-violet-600 font-medium transition-colors">Portfolio</a>
+                    <a href="#process" class="link-hover text-slate-700 hover:text-violet-600 font-medium transition-colors">Process</a>
+                    <a href="#contact" class="btn-primary px-6 py-3 rounded-full text-white font-semibold">Start Project</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-900 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-full h-screen bg-white z-50 md:hidden">
+            <div class="p-6">
+                <button id="close-menu" class="absolute top-6 right-6 text-slate-900">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <div class="flex flex-col space-y-6 mt-16">
+                    <a href="#home" class="text-2xl font-bold text-slate-900 mobile-link">Home</a>
+                    <a href="#about" class="text-2xl font-bold text-slate-900 mobile-link">About</a>
+                    <a href="#services" class="text-2xl font-bold text-slate-900 mobile-link">Services</a>
+                    <a href="#portfolio" class="text-2xl font-bold text-slate-900 mobile-link">Portfolio</a>
+                    <a href="#process" class="text-2xl font-bold text-slate-900 mobile-link">Process</a>
+                    <a href="#contact" class="btn-primary px-6 py-3 rounded-full text-white font-semibold text-center mt-4">Start Project</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-violet-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="absolute top-40 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-1/2 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Content -->
+                <div class="space-y-8">
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-violet-100 text-violet-700 font-medium text-sm">
+                        <span class="w-2 h-2 bg-violet-600 rounded-full pulse-glow"></span>
+                        <span>Cinematic Visual Storytelling Studio</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                        We Bring <br>
+                        <span class="gradient-text">Brands to Life</span><br>
+                        Through Motion.
+                    </h1>
+                    
+                    <p class="text-xl text-slate-600 max-w-lg leading-relaxed">
+                        At MotionLink, we believe motion is more than movement , it's connection. We craft cinematic visual experiences that help brands communicate with clarity, creativity, and impact.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#portfolio" class="btn-primary px-8 py-4 rounded-full text-white font-semibold text-center inline-flex items-center justify-center space-x-2">
+                            <span>View Our Work</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                        <a href="#contact" class="px-8 py-4 rounded-full border-2 border-slate-300 text-slate-700 font-semibold hover:border-violet-600 hover:text-violet-600 transition-all text-center">
+                            Start Your Project
+                        </a>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8 pt-8 border-t border-slate-200">
+                        <div>
+                            <div class="stat-number text-3xl font-bold text-slate-900" data-target="50">0</div>
+                            <div class="text-sm text-slate-600 mt-1">Projects Delivered</div>
+                        </div>
+                        <div>
+                            <div class="stat-number text-3xl font-bold text-slate-900" data-target="30">0</div>
+                            <div class="text-sm text-slate-600 mt-1">Happy Clients</div>
+                        </div>
+                        <div>
+                            <div class="stat-number text-3xl font-bold text-slate-900" data-target="100">0</div>
+                            <div class="text-sm text-slate-600 mt-1">% Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual -->
+                <div class="relative">
+                    <div class="video-container aspect-video bg-gradient-to-br from-slate-900 to-violet-900 shadow-2xl float">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <button class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform group">
+                                <svg class="w-8 h-8 text-violet-600 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="bg-white/10 backdrop-blur-md rounded-lg p-4">
+                                <div class="text-white text-sm font-medium">Showreel 2024</div>
+                                <div class="text-white/70 text-xs mt-1">Watch our latest work</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Elements -->
+                    <div class="absolute -top-6 -right-6 w-24 h-24 bg-violet-600 rounded-2xl flex items-center justify-center text-white shadow-xl float" style="animation-delay: 1s;">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    
+                    <div class="absolute -bottom-4 -left-4 bg-white rounded-xl p-4 shadow-xl float" style="animation-delay: 2s;">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold text-slate-900">Project Delivered</div>
+                                <div class="text-xs text-slate-500">2 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <div class="absolute -top-4 -left-4 w-full h-full border-2 border-violet-200 rounded-2xl"></div>
+                    <div class="relative bg-gradient-to-br from-slate-900 to-violet-900 rounded-2xl p-8 text-white">
+                        <h3 class="text-2xl font-bold mb-4">Our Mission</h3>
+                        <p class="text-lg leading-relaxed text-slate-300">
+                            MotionLink exists to transform ideas into powerful visual motion that connects, inspires, and drives impact.
+                        </p>
+                        <div class="mt-8 flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-violet-600 rounded-full flex items-center justify-center">
+                                <span class="text-xl font-bold">ML</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold">MotionLink Studio</div>
+                                <div class="text-sm text-slate-400"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <h2 class="text-4xl font-bold text-slate-900">Where Vision<br>Meets Motion</h2>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        MotionLink was created to bridge creativity and impact. We are not just editors , we are visual storytellers who build emotional brand experiences through cinematic motion.
+                    </p>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        Every frame is designed with intention, precision, and emotion. We combine cutting-edge motion graphics with strategic storytelling to create content that doesn't just look good , it performs.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6 pt-6">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-900">Strategic Motion</h4>
+                                <p class="text-sm text-slate-600 mt-1">Purpose-driven editing</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-900">Premium Quality</h4>
+                                <p class="text-sm text-slate-600 mt-1">Cinematic standards</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Section - FIXED -->
+    <section id="services" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Our Services</h2>
+                <p class="text-lg text-slate-600">Comprehensive motion solutions tailored to elevate your brand's visual presence across all platforms.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1: Cinematic Social & Brand Videos -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-sm">
+                    <div class="w-14 h-14 bg-violet-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Scroll-Stopping Social</h3>
+                    <p class="text-slate-600 mb-4">Cinematic brand videos for LinkedIn, Instagram, TikTok. Story-first, algorithm-ready, built to convert not just impress.</p>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-violet-600 rounded-full"></span>
+                            <span>Platform-native formats</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-violet-600 rounded-full"></span>
+                            <span>Hook-optimized openings</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 2: Ongoing Content Systems -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-sm">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">The Content Engine</h3>
+                    <p class="text-slate-600 mb-4">Monthly pipelines, not one-offs. From concept to weekly deliverables reels, clips, versions running like clockwork.</p>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+                            <span>Editorial calendars</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+                            <span>Batch production systems</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 3: Creator & Podcaster Clip Lab -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-sm">
+                    <div class="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">The Clip Lab</h3>
+                    <p class="text-slate-600 mb-4">Long form gold into viral shorts. Podcasts, webinars, YouTube repurposed into platform-perfect clips with killer hooks.</p>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+                            <span>Auto-captioned & styled</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+                            <span>Multi-platform exports</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 4: Performance-Focused Video Optimization -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-sm">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Performance Editing</h3>
+                    <p class="text-slate-600 mb-4">Data driven cuts. We test hooks, lengths, ratios, and thumbnails optimizing for retention, engagement, and ROI.</p>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-emerald-600 rounded-full"></span>
+                            <span>A/B variant testing</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-emerald-600 rounded-full"></span>
+                            <span>Retention analytics</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 5: Visual Identity in Motion -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-sm">
+                    <div class="w-14 h-14 bg-rose-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Motion Identity</h3>
+                    <p class="text-slate-600 mb-4">Branded motion systems intros, transitions, lower thirds, templates. Every video instantly recognizable as you.</p>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-rose-600 rounded-full"></span>
+                            <span>Template libraries</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-rose-600 rounded-full"></span>
+                            <span>Brand-safe consistency</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 6: Launch & Campaign Video Packs -->
+                <div class="service-card bg-white rounded-2xl p-8 shadow-sm">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Launch Kits</h3>
+                    <p class="text-slate-600 mb-4">Complete campaign video packs: teaser, hero, social snippets, recap one coherent story, every format covered.</p>
+                    <ul class="space-y-2 text-sm text-slate-500">
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full"></span>
+                            <span>Teaser to recap coverage</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full"></span>
+                            <span>Platform-optimized bundle</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-slate-900 mb-4">Selected Work</h2>
+                    <p class="text-lg text-slate-600 max-w-2xl">Crafted with precision. Designed to connect. Built for impact.</p>
+                </div>
+                
+                <!-- Filter Buttons -->
+                <div class="flex space-x-2 mt-6 md:mt-0">
+                    <button class="filter-btn active px-4 py-2 rounded-full text-sm font-medium bg-violet-600 text-white transition-all" data-filter="all">All</button>
+                    <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-100 text-slate-600 hover:bg-violet-100 hover:text-violet-600 transition-all" data-filter="cinematic">Cinematic</button>
+                    <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-100 text-slate-600 hover:bg-violet-100 hover:text-violet-600 transition-all" data-filter="corporate">Corporate</button>
+                    <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-100 text-slate-600 hover:bg-violet-100 hover:text-violet-600 transition-all" data-filter="social">Social</button>
+                </div>
+            </div>
+
+<!-- Portfolio Grid -->
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+    <!-- Portfolio Item 1 - Cinematic -->
+    <div class="portfolio-item aspect-video bg-slate-900 relative group overflow-hidden rounded-2xl cursor-pointer" data-category="cinematic">
+        <!-- REPLACE THIS SRC WITH YOUR IMAGE PATH -->
+        <img src="project1.png" alt="Brand Story Film" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6">
+            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <span class="inline-block px-3 py-1 bg-violet-600 text-white text-xs font-semibold rounded-full mb-2">Cinematic</span>
+                <h3 class="text-xl font-bold text-white">Cinematic Campaign </h3>
+                <p class="text-slate-300 text-sm mt-1"></p>
+            </div>
+            <!-- Play Button -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <!-- Portfolio Item 2 - Corporate -->
+    <div class="portfolio-item aspect-video bg-slate-900 relative group overflow-hidden rounded-2xl cursor-pointer" data-category="corporate">
+        <img src="prooo5.png" alt="Training Center Promo" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6">
+            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <span class="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full mb-2">Corporate</span>
+                <h3 class="text-xl font-bold text-white">Corporate Films</h3>
+                <p class="text-slate-300 text-sm mt-1"></p>
+            </div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Item 3 - Social -->
+    <div class="portfolio-item aspect-video bg-slate-900 relative group overflow-hidden rounded-2xl cursor-pointer" data-category="social">
+        <img src="social3.png" alt="Product Launch Reel" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6">
+            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <span class="inline-block px-3 py-1 bg-pink-600 text-white text-xs font-semibold rounded-full mb-2">Social</span>
+                <h3 class="text-xl font-bold text-white">Brand Story </h3>
+                <p class="text-slate-300 text-sm mt-1"></p>
+            </div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Item 4 - Cinematic -->
+    <div class="portfolio-item aspect-video bg-slate-900 relative group overflow-hidden rounded-2xl cursor-pointer" data-category="cinematic">
+        <img src="Trailer 4.png" alt="Documentary Short" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6">
+            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <span class="inline-block px-3 py-1 bg-violet-600 text-white text-xs font-semibold rounded-full mb-2">Cinematic</span>
+                <h3 class="text-xl font-bold text-white">Launch Trailer</h3>
+                <p class="text-slate-300 text-sm mt-1"></p>
+            </div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Item 5 - Corporate -->
+    <div class="portfolio-item aspect-video bg-slate-900 relative group overflow-hidden rounded-2xl cursor-pointer" data-category="corporate">
+        <img src="pro5.png" alt="Real Estate Showcase" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6">
+            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <span class="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full mb-2">Corporate</span>
+                <h3 class="text-xl font-bold text-white">Social Ads</h3>
+                <p class="text-slate-300 text-sm mt-1"></p>
+            </div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Item 6 - Social -->
+    <div class="portfolio-item aspect-video bg-slate-900 relative group overflow-hidden rounded-2xl cursor-pointer" data-category="social">
+        <img src="Corporate2.png" alt="TikTok Series" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6">
+            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <span class="inline-block px-3 py-1 bg-pink-600 text-white text-xs font-semibold rounded-full mb-2">Social</span>
+                <h3 class="text-xl font-bold text-white">Content Pack</h3>
+                <p class="text-slate-300 text-sm mt-1"></p>
+            </div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+            <div class="text-center mt-12">
+                <a href="#contact" class="inline-flex items-center space-x-2 text-violet-600 font-semibold hover:text-violet-700 transition-colors">
+                    <span>View All Projects</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-24 bg-slate-50 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full">
+            <div class="absolute top-1/4 left-0 w-96 h-96 bg-violet-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+            <div class="absolute bottom-1/4 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">Our Process</h2>
+                <p class="text-lg text-slate-600">A structured workflow designed to deliver exceptional results on time, every time.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-violet-600 to-transparent"></div>
+
+                <!-- Process Steps -->
+                <div class="space-y-12">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-full md:w-1/2 md:pr-12 md:text-right">
+                            <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                                <div class="inline-flex items-center justify-center w-12 h-12 bg-violet-600 text-white rounded-full text-xl font-bold mb-4 md:ml-auto">1</div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Discovery</h3>
+                                <p class="text-slate-600">We dive deep into your brand, goals, and audience to understand the story you want to tell.</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:block w-4 h-4 bg-violet-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                        <div class="w-full md:w-1/2 md:pl-12"></div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-full md:w-1/2 md:pr-12"></div>
+                        <div class="hidden md:block w-4 h-4 bg-violet-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                        <div class="w-full md:w-1/2 md:pl-12">
+                            <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                                <div class="inline-flex items-center justify-center w-12 h-12 bg-violet-600 text-white rounded-full text-xl font-bold mb-4">2</div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Strategy</h3>
+                                <p class="text-slate-600">We develop a creative concept and detailed plan that aligns with your objectives and resonates with your audience.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-full md:w-1/2 md:pr-12 md:text-right">
+                            <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                                <div class="inline-flex items-center justify-center w-12 h-12 bg-violet-600 text-white rounded-full text-xl font-bold mb-4 md:ml-auto">3</div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Editing & Motion</h3>
+                                <p class="text-slate-600">The magic happens. We craft your visuals with cinematic editing, motion graphics, and sound design.</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:block w-4 h-4 bg-violet-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                        <div class="w-full md:w-1/2 md:pl-12"></div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-full md:w-1/2 md:pr-12"></div>
+                        <div class="hidden md:block w-4 h-4 bg-violet-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                        <div class="w-full md:w-1/2 md:pl-12">
+                            <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                                <div class="inline-flex items-center justify-center w-12 h-12 bg-violet-600 text-white rounded-full text-xl font-bold mb-4">4</div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Refinement</h3>
+                                <p class="text-slate-600">We collaborate with you to fine-tune every detail until it's perfect. Your feedback drives the final polish.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-full md:w-1/2 md:pr-12 md:text-right">
+                            <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                                <div class="inline-flex items-center justify-center w-12 h-12 bg-violet-600 text-white rounded-full text-xl font-bold mb-4 md:ml-auto">5</div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Final Delivery</h3>
+                                <p class="text-slate-600">You receive your project in all required formats, optimized for your platforms, ready to make an impact.</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:block w-4 h-4 bg-violet-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                        <div class="w-full md:w-1/2 md:pl-12"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 gradient-bg relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.05%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Bring Your Brand to Life?</h2>
+            <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">Let's create something extraordinary together. Your story deserves cinematic treatment.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contact" class="bg-white text-violet-900 px-8 py-4 rounded-full font-bold hover:bg-slate-100 transition-all transform hover:scale-105 inline-flex items-center justify-center space-x-2">
+                    <span>Start Your Project</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+                <a href="mailto:hello@motionlink.studio" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-all inline-flex items-center justify-center space-x-2">
+                    <span>hello@motionlink.studio</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-4xl font-bold text-slate-900 mb-4">Let's Connect</h2>
+                    <p class="text-lg text-slate-600 mb-8">Tell us about your project. We'll get back to you within 24 hours.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-900">Email</h4>
+                                <p class="text-slate-600">hello@motionlink.studio</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-900">Location</h4>
+                                <p class="text-slate-600"></p>
+                                <p class="text-sm text-slate-500">Serving clients globally</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-900">Response Time</h4>
+                                <p class="text-slate-600">Within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="mt-8 pt-8 border-t border-slate-200">
+                        <h4 class="font-semibold text-slate-900 mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-violet-600 hover:text-white transition-all">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-violet-600 hover:text-white transition-all">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </a>
+                           <a href="https://www.linkedin.com/company/m-otionlink/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 hover:bg-violet-600 hover:text-white transition-all">
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-slate-50 rounded-2xl p-8">
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Name</label>
+                                <input type="text" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-violet-600 focus:border-transparent outline-none transition-all" placeholder="Your name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Email</label>
+                                <input type="email" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-violet-600 focus:border-transparent outline-none transition-all" placeholder="you@company.com">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Project Type</label>
+                            <select class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-violet-600 focus:border-transparent outline-none transition-all">
+                                <option>Select a service</option>
+                                <option>Scroll-Stopping Social</option>
+                                <option>The Content Engine</option>
+                                <option>The Clip Lab</option>
+                                <option>Performance Editing</option>
+                                <option>Motion Identity</option>
+                                <option>Launch Kits</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Budget Range</label>
+                            <select class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-violet-600 focus:border-transparent outline-none transition-all">
+                                <option>Select budget range</option>
+                                  <option>$0 - $500</option>
+                                <option>$500 - $1,000</option>
+                                <option>$1,000 - $3,000</option>
+                                <option>$3,000 - $5,000</option>
+                                <option>$5,000+</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Message</label>
+                            <textarea rows="4" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-violet-600 focus:border-transparent outline-none transition-all resize-none" placeholder="Tell us about your project..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full btn-primary py-4 rounded-lg text-white font-semibold text-lg">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-violet-600 to-blue-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">ML</span>
+                        </div>
+                        <span class="text-xl font-bold font-['Space_Grotesk']">MotionLink</span>
+                    </div>
+                    <p class="text-slate-400 max-w-sm">Transforming ideas into powerful visual motion that connects, inspires, and drives impact. Based in Beirut, serving clients globally.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#services" class="hover:text-white transition-colors">Scroll-Stopping Social</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">The Content Engine</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">The Clip Lab</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Launch Kits</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="#portfolio" class="hover:text-white transition-colors">Portfolio</a></li>
+                        <li><a href="#process" class="hover:text-white transition-colors">Process</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-slate-500 text-sm">&copy; 2024 MotionLink Studio. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-slate-500 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-slate-500 hover:text-white text-sm transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+       <!-- JavaScript -->
+    <script>
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        if (cursorDot && cursorOutline) {
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: "forwards" });
+            });
+        }
+
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-blur', 'shadow-sm');
+            } else {
+                navbar.classList.remove('nav-blur', 'shadow-sm');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Stats counter animation
+        const stats = document.querySelectorAll('.stat-number');
+        
+        stats.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-target'));
+            
+            ScrollTrigger.create({
+                trigger: stat,
+                start: "top 80%",
+                onEnter: () => {
+                    gsap.to(stat, {
+                        innerHTML: target,
+                        duration: 2,
+                        snap: { innerHTML: 1 },
+                        ease: "power2.out"
+                    });
+                }
+            });
+        });
+
+        // Portfolio filtering
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-violet-600', 'text-white');
+                    b.classList.add('bg-slate-100', 'text-slate-600');
+                });
+                
+                // Add active class to clicked button
+                btn.classList.remove('bg-slate-100', 'text-slate-600');
+                btn.classList.add('active', 'bg-violet-600', 'text-white');
+
+                const filter = btn.getAttribute('data-filter');
+
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        gsap.to(item, { opacity: 1, scale: 1, duration: 0.4, display: 'block' });
+                    } else {
+                        gsap.to(item, { opacity: 0, scale: 0.8, duration: 0.4, display: 'none' });
+                    }
+                });
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you within 24 hours.');
+            e.target.reset();
+        });
+
+        // GSAP Animations
+        // Hero text reveal
+        gsap.from("h1", {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.2
+        });
+
+        gsap.from("h1 + p", {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.4
+        });
+
+        // Process steps
+        gsap.from("#process .bg-white", {
+            scrollTrigger: {
+                trigger: "#process",
+                start: "top 70%"
+            },
+            opacity: 0,
+            x: -30,
+            duration: 0.8,
+            stagger: 0.3,
+            ease: "power3.out"
+        });
+
+        // Portfolio items
+        gsap.from(".portfolio-item", {
+            scrollTrigger: {
+                trigger: "#portfolio",
+                start: "top 70%"
+            },
+            opacity: 0,
+            scale: 0.9,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power3.out"
+        });
+    </script>
+</body>
+</html>
