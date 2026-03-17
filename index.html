@@ -297,20 +297,7 @@
     </style>
 </head>
 <body>
-       <form action="https://formspree.io/f/mwvrwrlw" method="POST">
-
-  <input type="text" name="name" placeholder="Your Name" required>
-
-  <input type="email" name="email" placeholder="Your Email" required>
-
-  <textarea name="message" placeholder="Your Message" required></textarea>
-
-  <!-- FIXED: inside form -->
-  <input type="hidden" name="_redirect" value="https://motionlink.live/thank-you.html">
-
-  <button type="submit">Send Message</button>
-
-</form>
+       
     
     <!-- Custom Cursor -->
     <div class="cursor-dot hidden md:block"></div>
@@ -998,6 +985,29 @@
                 </div>
 
                 <!-- Contact Form -->
+                <section id="contact" class="py-24 bg-white">
+  <div class="max-w-3xl mx-auto px-4">
+
+    <h2 class="text-3xl font-bold mb-6 text-center">Contact Us</h2>
+
+    <form action="https://formspree.io/f/mwvrwrlw" method="POST" class="space-y-4">
+
+      <input type="text" name="name" placeholder="Your Name" required class="w-full p-3 border rounded-lg">
+
+      <input type="email" name="email" placeholder="Your Email" required class="w-full p-3 border rounded-lg">
+
+      <textarea name="message" placeholder="Your Message" required class="w-full p-3 border rounded-lg"></textarea>
+
+      <input type="hidden" name="_redirect" value="https://motionlink.live/thank-you.html">
+
+      <button type="submit" class="btn-primary w-full py-3 rounded-lg text-white font-semibold">
+        Send Message
+      </button>
+
+    </form>
+
+  </div>
+</section>
                 <div class="bg-slate-50 rounded-2xl p-8">
                     <form id="contact-form" class="space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
